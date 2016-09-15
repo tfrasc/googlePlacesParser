@@ -14,26 +14,26 @@ var Place = function() {
   this.vicinity = "";
 }
 
-//Google Places API
-function parseGooglePlace(id) {
+// Init Google Places API
+function getGoogleLocations() {
+   new google.maps.places.Autocomplete(
+   (document.getElementById('places-input')), {
+       types: ['geocode']
+   });
+}
+
+// Parse Google Places results
+function parseGooglePlaces(id) {
   var geocoder = new google.maps.Geocoder();
   var address = document.getElementById(id).value;
-  var places = [];
+
+  // global to allow access in html file
+  places = [];
 
   geocoder.geocode({ 'address': address }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
 
-      /*****TEMP???*****/
-      var resultsDiv = document.getElementById('results');
-      var inner = "";
-
-      console.log("RESULTS LENGTH");
-      console.log(results.length);
-
       for(var resultIndex = 0; resultIndex < results.length; resultIndex++) {
-
-        // inner += "<p>" + resultIndex + "</p>";
-
        var place = new Place();
 
        place.latitude = results[resultIndex].geometry.location.lat;
@@ -66,28 +66,6 @@ function parseGooglePlace(id) {
 
        places.push(place);
       }
-
-      //  resultsDiv.innerHTML = inner;
     }
   });
-  console.log("PLACES");
-  console.log(places);
 }
-
-function getGoogleLocation() {
-   new google.maps.places.Autocomplete(
-   (document.getElementById('places-input')), {
-       types: ['geocode']
-   });
-}
-
-getGoogleLocation();
-
-$(document).ready(function() {
-  $('#places-input').on('change', function() {
-    parseGooglePlace("places-input");
-  });
-  $('#places-input').on('click', function() {
-    parseGooglePlace("places-input");
-  });
-});

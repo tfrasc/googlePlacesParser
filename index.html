@@ -5,3 +5,16 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="googlePlacesParser.js"></script>
+<script>
+$(document).ready(function() {
+  getGoogleLocations();
+  $('#places-input').on('change', function() {
+    parseGooglePlaces("places-input");
+    console.log(places);
+  });
+  $('#places-input').on('click', function() {
+    parseGooglePlaces("places-input");
+    console.log(places);
+  });
+});
+</script>

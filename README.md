@@ -3,11 +3,11 @@ Simple script to grab Google Places results from input box and parse the results
 
 ## Usage
 - Make sure you include both the Google Places API and jQuery. For Google Places we used:
-```<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-```
+``<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+``
 and for jQuery:
-```<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
- ```
+``<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ ``
 - Make sure to call getGoogleLocations() before using parseGooglePlaces()
 - Make sure to change the HTML element id that's set on your text input box that is autocompleted by the Google Places API (the id in the example is "#places-input")
 

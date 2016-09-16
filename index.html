@@ -1,5 +1,25 @@
-<input id="places-input" type="text">
-<div id="results"></div>
+<input id="places-input" type="text"><button id="parse-it">Parse it!</button>
+<div id="results">
+  <table id="results-table">
+    <thead>
+    <tr>
+      <th>street_number</th>
+      <th>street</th>
+      <th>city</th>
+      <th>state</th>
+      <th>country</th>
+      <th>zip_code</th>
+      <th>full_address</th>
+      <th>phone_number</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>types</th>
+      <th>vicinity</th>
+    </tr>
+    <thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
 
 <link rel="stylesheet" type="text/css" href="style.css">
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
@@ -8,13 +28,34 @@
 <script>
 $(document).ready(function() {
   getGoogleLocations();
-  $('#places-input').on('change', function() {
+
+  $('#parse-it').on('click', function() {
     parseGooglePlaces("places-input");
-    console.log(places);
+    displayExample(places);
+    places = [];
   });
-  $('#places-input').on('click', function() {
-    parseGooglePlaces("places-input");
-    console.log(places);
-  });
+
+  function displayExample(places) {
+    rows = "";
+    if(places != null){
+      for(var i = 0; i < places.length; i++) {
+        rows += "<tr>"
+           + "<td>" + places[i].street_number + "</td>"
+           + "<td>" + places[i].street + "</td>"
+           + "<td>" + places[i].city + "</td>"
+           + "<td>" + places[i].state + "</td>"
+           + "<td>" + places[i].country + "</td>"
+           + "<td>" + places[i].zip_code + "</td>"
+           + "<td>" + places[i].full_address + "</td>"
+           + "<td>" + places[i].phone_number + "</td>"
+           + "<td>" + places[i].latitude + "</td>"
+           + "<td>" + places[i].longitude + "</td>"
+           + "<td>" + places[i].types + "</td>"
+           + "<td>" + places[i].vicinity + "</td>"
+           + "</tr>";
+      }
+      $('#table-body').html(rows);
+    }
+  }
 });
 </script>

@@ -1,3 +1,7 @@
+// global to allow access in html file
+var places = [];
+
+
 // Place class definition
 var Place = function() {
   this.street_number = "";
@@ -14,6 +18,7 @@ var Place = function() {
   this.vicinity = "";
 }
 
+
 // Init Google Places API
 function getGoogleLocations() {
    new google.maps.places.Autocomplete(
@@ -27,17 +32,14 @@ function parseGooglePlaces(id) {
   var geocoder = new google.maps.Geocoder();
   var address = document.getElementById(id).value;
 
-  // global to allow access in html file
-  places = [];
-
   geocoder.geocode({ 'address': address }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
 
       for(var resultIndex = 0; resultIndex < results.length; resultIndex++) {
        var place = new Place();
 
-       place.latitude = results[resultIndex].geometry.location.lat;
-       place.longitude = results[resultIndex].geometry.location.lng;
+       place.latitude = results[resultIndex].geometry.location.lat();
+       place.longitude = results[resultIndex].geometry.location.lng();
        place.full_address = results[resultIndex].formatted_address;
        place.phone_number = results[resultIndex].formatted_phone_number;
        place.types = results[resultIndex].types;

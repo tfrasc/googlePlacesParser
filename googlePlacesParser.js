@@ -1,6 +1,5 @@
-// global to allow access in html file
+// global to allow access in other files
 var places = [];
-
 
 // Place class definition
 var Place = function() {
@@ -18,7 +17,6 @@ var Place = function() {
   this.vicinity = "";
 }
 
-
 // Init Google Places API
 function getGoogleLocations() {
    new google.maps.places.Autocomplete(
@@ -27,7 +25,7 @@ function getGoogleLocations() {
    });
 }
 
-// Parse Google Places results
+// Parse Google Places results and place in global places array
 function parseGooglePlaces(id) {
   var geocoder = new google.maps.Geocoder();
   var address = document.getElementById(id).value;
@@ -36,37 +34,37 @@ function parseGooglePlaces(id) {
     if (status == google.maps.GeocoderStatus.OK) {
 
       for(var resultIndex = 0; resultIndex < results.length; resultIndex++) {
-       var place = new Place();
+        var place = new Place();
 
-       place.latitude = results[resultIndex].geometry.location.lat();
-       place.longitude = results[resultIndex].geometry.location.lng();
-       place.full_address = results[resultIndex].formatted_address;
-       place.phone_number = results[resultIndex].formatted_phone_number;
-       place.types = results[resultIndex].types;
-       place.vicinity = results[resultIndex].vicinity;
+        place.latitude = results[resultIndex].geometry.location.lat();
+        place.longitude = results[resultIndex].geometry.location.lng();
+        place.full_address = results[resultIndex].formatted_address;
+        place.phone_number = results[resultIndex].formatted_phone_number;
+        place.types = results[resultIndex].types;
+        place.vicinity = results[resultIndex].vicinity;
 
-       for(i = 0; i < results[resultIndex].address_components.length; i++){
-         if (results[resultIndex].address_components[i].types[0] == "street_number") {
-           place.street_number = results[resultIndex].address_components[i].long_name;
-         }
-         else if (results[resultIndex].address_components[i].types[0] == "route") {
-           place.street = results[resultIndex].address_components[i].long_name;
-         }
-         else if (results[resultIndex].address_components[i].types[0] == "locality") {
-           place.city = results[resultIndex].address_components[i].long_name;
-         }
-         else if (results[resultIndex].address_components[i].types[0] == "administrative_area_level_1") {
-           place.state = results[resultIndex].address_components[i].long_name;
-         }
-         else if (results[resultIndex].address_components[i].types[0] == "country") {
-           place.country = results[resultIndex].address_components[i].long_name;
-         }
-         else if (results[resultIndex].address_components[i].types[0] == "postal_code") {
-           place.zip_code = results[resultIndex].address_components[i].long_name;
-         }
-       }
+        for(i = 0; i < results[resultIndex].address_components.length; i++){
+          if (results[resultIndex].address_components[i].types[0] == "street_number") {
+            place.street_number = results[resultIndex].address_components[i].long_name;
+          }
+          else if (results[resultIndex].address_components[i].types[0] == "route") {
+            place.street = results[resultIndex].address_components[i].long_name;
+          }
+          else if (results[resultIndex].address_components[i].types[0] == "locality") {
+            place.city = results[resultIndex].address_components[i].long_name;
+          }
+          else if (results[resultIndex].address_components[i].types[0] == "administrative_area_level_1") {
+            place.state = results[resultIndex].address_components[i].long_name;
+          }
+          else if (results[resultIndex].address_components[i].types[0] == "country") {
+            place.country = results[resultIndex].address_components[i].long_name;
+          }
+          else if (results[resultIndex].address_components[i].types[0] == "postal_code") {
+            place.zip_code = results[resultIndex].address_components[i].long_name;
+          }
+        }
 
-       places.push(place);
+        places.push(place);
       }
     }
   });
